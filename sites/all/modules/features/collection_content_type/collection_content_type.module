@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Collection Content Type feature.
+ */
+
+include_once 'collection_content_type.features.inc';

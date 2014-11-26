@@ -1,0 +1,12 @@
+name = Taxonomies for Digital
+description = A collection of taxonomies for digital.stlawu.edu
+core = 7.x
+package = Features
+version = 7.x-1.0-beta1
+project = taxonomies_for_digital
+dependencies[] = features
+dependencies[] = taxonomy
+features[features_api][] = api:2
+features[taxonomy][] = project_status
+features[taxonomy][] = roles
+features[taxonomy][] = subject_headings

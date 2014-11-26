@@ -1,0 +1,102 @@
+The Zoomify Converter 
+
+
+
+The Zoomify Converter enables one-step, drag-and-drop conversion of high-quality images to support zoom-and-pan viewing and on-the-fly, on-demand, downloading of image content. 
+
+
+
+
+
+To use the Converter, double-click the Converter icon and use the File | Open menu to select a JPG, TIF, or BMP source image file to convert. Or, simply drag any your source image file onto the onto the clearly labeled drop zone of the converter dialog.  A visual display will show conversion progress.  When the conversion completes, locate the new folder the converter has created.  You will find it directly next to the original source image (that is, in the same folder as the source image).
+
+
+
+File size limits: the Zoomify Converters included in the Zoomify HTML5, Zoomify HTML5 Developer, Zoomify Flash,  and Zoomify Flash Developer product editions will convert source files up to 256 megapixels in size. The Zoomify Converters included in the Zoomify Enterprise, Zoomify Enterprise Developer, and Zoomify HTML5 Enterprise product editions will convert source files up to 768 megapixels in size.  Additional Converter editions are available which convert images that exceed these size limits, including an edition that is not limited which will converter images of any size*.  In addition, editions are available for various Unix and Linux platforms, and which support additional source file formats. For information on these additional Converter editions, please contact Zoomify Support at support@zoomify.com.  Detailed information will be added to future releases of this product and the Zoomify website.   
+
+
+
+*Note: In addition to the unlimited edition mentioned above, a Converter without limits is included in the product folder "Legacy Converter - Unlimited".  This Converter was included in Zoomify products prior to 2012.  While is does not enforce a size limit on source image files it does have other limitations, including some incompatibilities with newer hardware.  It also has other features that differ from those of the current converters.  Detailed information is provided in the file "Read Me First.txt" in the "Legacy Converter" folder.
+
+
+
+The new folder will have the same name as the source image - without any three letter extension ('.jpg', '.tif', '.bmp').  The new folder IS your new Zoomify Image.  It is NOT necessary to view or modify the contents of the new folder. The XML file and subfolder containing numerous small JPEG image files are for the use of the Zoomify Image Viewer, not a web designer or web site manager.
+
+
+
+To publish the new Zoomify Image simply copy the folder (the entire folder, not just its contents) to your web server along with the Zoomify Image Viewer JavaScript file and the Assets folder and its subfolders.  Then create a web page (html file) and copy it to the server as well. These FOUR items are all that is needed - your Zoomify Image folder, the ZoomifyImageViewer.js file, the Assets folder, and a web page HTML file.  For additional details on publishing your Zoomify Images please see the User's Guide in the Documentation folder - or for a quick intro, see the READ ME FIRST text file at the top level in the product download folder.
+
+
+
+
+
+Instructions for using the Zoomify Command-Line Converter (Enterprise editions only):
+
+
+
+To call the command-line converter use this form:  
+
+
+
+	exeName fileToConvert  
+
+
+
+The converter supports several parameters.  Use the exe name without any parameters to see usage information. 
+
+
+
+Use the parameters in any order, however, always place the filename to be converted after the parameters, at the end of entire command string.  
+
+
+
+The following parameters are supported:
+
+
+
+	-b 		NOT required as there is no user interface to hide.
+
+	-o		To specify foldername or filename for output.
+
+	-p		To specify PFF output rather than folder-based storage 
+
+			('.pff' will be auto-added to filename if not present).
+
+	-e		Displays list of supported file extensions, separated by semicolons.
+
+	-i		Checks filename and returns 0 if file can be zoomified, >0 otherwise. 
+
+			Also prints file information.
+
+	-qnnn	Sets JPEG quality from 20 to 100
+
+
+
+The Zoomify Command-Line Converter also supports standard exit codes. Use ERRORLEVEL in batch file. 0 = success.
+
+
+
+	-1 = bad command line options.
+
+	1 = unrecognized file.
+
+	2 = bad output file/folder name.
+
+	3 = input file unreadable.
+
+	4 = cannot zoomify the input file.
+
+	5 = zoomify failed.
+
+
+
+
+
+
+
+Please note: If you are using an operating system that pre-dates Windows XP or OS X v10.5 you may need the earlier version of the Zoomify Converter available in the Legacy Converter folder.
+
+
+
+
+

@@ -1,0 +1,278 @@
+The Zoomify Converter - Legacy Edition
+
+
+
+
+
+The Legacy Edition of the Zoomify Converter is from versions of the Zoomify products available prior to 2012.  It provides several features that are either not present in the current Zoomify  Converter editions, or which are provided in a different implementation.  These differences are described below.  Please note that unless these differences are relevant to your specific needs, it is strongly recommended that you use the current edition of the Zoomify Converters.  It is optimized for superior performance and output quality, and, most importantly, it is built to work with today's hardware.  
+
+
+
+
+
+(Macintosh users please note: the Macintosh version of the Legacy Converter is a PowerPC application.  As such, it will not run on Macintosh OS v10.7 'Lion' and later OS versions. If you are using an Macintosh running a prior OS version and would like the Legacy Converter Edition please contact Zoomify at support@zoomify.com.)  
+
+
+
+
+
+
+
+Key ways in which the Legacy Converter Edition differs from the current edition:
+
+ 
+
+ - It supports source image files of unlimited size.
+
+ 
+
+ - It permits image files to be drag-dropped onto the Converter icon without having to open the Converter dialog by double-clicking.
+
+  
+
+ - It is a single converter for both manual and command-line uses (Enterprise editions only).
+
+ 
+
+ - The command-line parameters differ slightly from the current release of the Zoomify Enterprise Command-Line Converter. Details are provided at the end of this file in the section titled: "Command-line And Scripted Conversion" (Enterprise editions only).
+
+ 
+
+ - The Legacy Converter uses a file named zoomifyConvertPrefs.asp to store preference settings. This file is used to instruct the converter to output single-file Zoomify Image files ('.PFF' files) rather than Zoomify Image folders. To use the prefs file simply convert any image. A new prefs file will be created next to the converter application.  Edit the prefs file in any text editor.  Detailed information is provided below in the section titled: "Enterprise Converter Preference Settings" (Enterprise editions only).
+
+ 
+
+ - The zoomifyConvertPrefs.asp file mentioned above is also used to modify the compression/quality setting of the converter.  Information is provided below in the section titled: "Enterprise Converter Preference Settings" (Enterprise editions only).
+
+ 	
+
+ - The Legacy Converter can be used to create Zoomify Images from multiple source images  (Enterprise editions only).  This multi-source image feature allows the use of horizontal image strips in the TIF file format to be named in a text file in a specific manner.  This text file - with its extension changed from '.txt' to '.apr' must be drag-dropped on the Converter.  The image files named in the text file will then be sequentially loaded to produce one zoomable result.  See the file "READ ME FIRST.txt" in the following folder for complete details:
+
+ 
+
+ 		"3 Converter  |  2 Multi-Source Converter Support
+
+ 		
+
+ 
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+Command-line And Scripted Conversion
+
+
+
+
+
+The Zoomify Enterprise Converter may be run as a desktop application, just like the standard Zoomify Converter provided in Zoomify's other products.  It is also built to convert images via a command line interface.  In addition, because of this command-line capability, the Enterprise Converter can be scripted using server-side scripting languages such as ASP, JSP, PHP, ColdFusion, VBScript, and AppleScript. 
+
+
+
+A simple starting point is to convert an source image by specifying the image's filename.  For convenience, rename the Zoomify Enterprise Converter 'exe' file “ze.exe” and place it in a folder called “zEnt” at the root of your c:\ drive. Having done this, it is possible at the command line to type:
+
+
+
+c:\zEnt\ze.exe -l c:\zEnt\log.txt –b c:\zEnt\image.tif
+
+
+
+This command would invoke the Converter and convert an image called “image.tif” in the folder \zEnt\.  The “-b” indicates that the Zoomify should convert the image in the background.1  In this example it is also specified that a log file named “log.txt” will be created within the \zEnt\ folder.  This is done with the “-l” or “-log” switch.  Note that to generate and append to a log, ensure that the log parameter is the first in the series after the converter application name.  The log file will track the files and other parameters that follow the log file invocation.
+
+
+
+It is also possible to state an output path.  This is done using the “-o” parameter and adding a path parameter.  For example:
+
+
+
+c:\zEnt\ze.exe -l c:\zEnt\log.txt –b –o c:\newFolder\ c:\zEnt\image.tif
+
+
+
+Note that is also possible to pass parameters that are otherwise supported using the “zoomifyConvertPrefs.asp” file.  These options are used similarly to other parameters. 
+
+For example, to change the output type from a Zoomify Image stored as a folder to one stored in 'PFF' single-file format, use the following parameter:
+
+
+
+c:\zEnt\ze.exe –b c:\zEnt\image.tif -ZOOM_OUTPUT_TYPE 1
+
+
+
+To explicitly invoke folder-based image output, simply pass the value “2” instead of a “1”.
+
+
+
+Similarly, the quality level applied to the generated tiles can be specified as follows:
+
+
+
+c:\zEnt\ze.exe –b c:\zEnt\image.tif -ZOOM_COMPRESSION 50
+
+
+
+In this case, the value represents the trade-off between quality and compression, with '1' representing low quality and extreme compression resulting in very small tile file sizes and 100 represents very high quality and very little compression resulting in larger tile files sizes.
+
+
+
+(For more information regarding the Converter preferences file, see the section below titled “Enterprise Converter preference settings”.)
+
+
+
+When run at the command-line or using ASP, JSP, or another scripting language, the Zoomify Enterprise Converter, currently supports full absolute paths (e.g., c:\myDirectory\myImage.tif), rather than relative paths (e.g., \myImage.tif).
+
+
+
+
+
+On a Mac OS X server, you may use AppleScript or a similar method to control the   Converter.  An example PHP/AppleScript implementation is included in the folder “Website Publishing | Converter - Scripting Examples”.   Additional information is available on Apple’s website at http://www.apple.com/applescript/.  The converter may also be controlled via the Terminal program.  Assuming your files are in a folder on your hard disk called “Zoomify”, it is possible to type the following:
+
+
+
+open -a /Zoomify/ze.app /Zoomify/image.tif
+
+ 
+
+By default on Mac OSX, the converter will display the Converter progress window.  To suppress this window and convert images in the background, locate the “Zoomify Enterprise” application and hold down the “Shift” key while double-clicking the file.  You should receive a message stating that the Converter will run in background mode.  To return to the default setting, simply repeat this process.  Background conversion is recommended on OSX to reduce system resource requirements and provide faster image conversion.2
+
+
+
+On both Macintosh and Windows platforms multiple images can be added to the string – just include paths to additional images:
+
+
+
+c:\zEnt\ze.exe –b c:\zEnt\image0.tif c:\zEnt\image1.tif c:\zEnt\image2.tif
+
+
+
+To change parameters for conversion to modify the default settings to specify, for example a different tile compression level, edit the file “zoomifyConvertPrefs.asp”.  For details, see the section below titled “Enterprise Converter preference settings”.
+
+
+
+Notes: the Zoomify Enterprise converter will always overwrite folders or files of the same name.  Also, if the converter is trying to process two files of the same name at the same time, it will cause a conflict between temp files that will result in temp files being left behind in the output folder.  There are several ways to avoid this problem.  First, each user can be assigned a different output folder, such that their content will always be converted to a specific folder.  This will allow avoidance of issues such as simultaneous conversion of files with the same name (excepting the possibility of one user submitting the same image for conversion in rapid succession).  Alternatively, each user could be assigned their own converter.  As the converter preferences file is stored next to the converter application itself, this would have the added advantage of preserving each user's image conversion preferences.
+
+
+
+Example Converter calling scripts
+
+Several 3rd party scripts for calling the Zoomify Enterprise Converter are provided in the folder “Website Publishing | Converter - Scripting Examples”. These scripts were created by Zoomify customers or partners and are provided only as examples.  As such, they cannot be supported to any significant extent.  The example scripts included are written in ASP, Cold Fusion, and PHP on Macintosh. 
+
+
+
+
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
+Enterprise Converter Preference Settings
+
+
+
+
+
+During the conversion process the Converter applies default settings which can be modified by editing parameters in the Converter preferences file.  This file is named “ZoomifyConvertPrefs.asp”.  It can be found directly next to the Converter after any conversion has completed.  If it exits prior to a conversion, the settings it contains will be applied.  If it does not, it will be created. 
+
+
+
+The parameters that are found within the preferences file include settings relevant to Zoomify Enterprise customers as well as parameters that were once used for legacy products.  Legacy parameters include settings relevant to 360 degree panoramic content and 3D object content, as well as output choices related to displaying such content in browser clients other than current Flash-based Viewers.  
+
+
+
+A small number of parameters in the preferences file were related to initial view and viewing constraints.  These have since been supplanted by HTML parameters passed into the Viewer by the calling web page or loaded by the Viewer from an XML file.  These  approaches are more standard and more flexible than embedding parameter values in the Zoomify Image to be extracted by the Viewer.  
+
+
+
+The parameter list below includes only those parameters that are useful for current Zoomify products.  These are the only parameters currently tested, documented, and supported.  
+
+
+
+
+
+Converter preference file parameters:
+
+
+
+ZOOM_COMPRESSION: 80    // 1 to 100 (small to large file, low to high quality)
+
+ZOOM_OUTPUT_TYPE: 2	// 1 for PFF single-file output, 2 for folder-based
+
+ZOOM_FILENAME: "myFile"		// output filename
+
+ZOOM_FOLDERPATHNAME: "c:\myFolder\"   // output location
+
+
+
+
+
+
+
+Changing the Converter compression level
+
+
+
+The degree of JPEG compression applied by the Converter when creating JPEG tile files can be specified via command line as follows: 
+
+
+
+c:\zEnt\ze.exe –b c:\zEnt\image.tif -ZOOM_COMPRESSION 50
+
+
+
+In this case, the value “50” represents a trade-off between quality and compression, favoring compression over quality.  The range for this parameter is “1” to “100”, with '1' representing low quality and extreme compression (resulting in very small tile file sizes) and 100 represents very high quality and very little compression (resulting in larger tile files sizes).
+
+
+
+This setting can also be set by editing the Converter preferences file.  The relevant line, by default, will appear as follows:
+
+
+
+ZOOM_COMPRESSION: 80
+
+
+
+
+
+
+
+Changing the Converter output type to 'PFF' single-file format
+
+
+
+The Zoomify Enterprise Converter is able to create Zoomify Images stored in folder-based or PFF single-file formats. The choice of storage type can be implemented via command-line parameter or by editing the Converter preferences file.  
+
+For example, to change the output type from a Zoomify Image stored as a folder (default) to one stored in 'PFF' single-file format, use the following:
+
+
+
+c:\zEnt\ze.exe –b c:\zEnt\image.tif -ZOOM_OUTPUT_TYPE 1
+
+To explicitly invoke folder-based image output (not required as this is the default), simply pass the value “2” instead of a “1”.
+
+
+
+It is also possible to specify the output type when converting via double-click or drag-drop, rather than via command-line or script.  Simply open the Converter preferences file “zoomifyConvertPrefs.asp” file in a text editor and edit the following line:
+
+
+
+ZOOM_OUTPUT_TYPE: 1
+
+
+
+A value of “1” specifies PFF single-file output, while a value of “2”  specifies folder-based storage (default).
+
+
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
