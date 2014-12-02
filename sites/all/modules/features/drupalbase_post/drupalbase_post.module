@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Post CT feature.
+ */
+
+include_once 'drupalbase_post.features.inc';

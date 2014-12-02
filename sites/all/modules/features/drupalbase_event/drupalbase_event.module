@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Event CT feature.
+ */
+
+include_once 'drupalbase_event.features.inc';
