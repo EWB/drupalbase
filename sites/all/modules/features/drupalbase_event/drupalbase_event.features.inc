@@ -21,7 +21,7 @@ function drupalbase_event_node_info() {
     'drupalbase_event' => array(
       'name' => t('Event'),
       'base' => 'node_content',
-      'description' => '',
+      'description' => t('Use for events - including historical events'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
