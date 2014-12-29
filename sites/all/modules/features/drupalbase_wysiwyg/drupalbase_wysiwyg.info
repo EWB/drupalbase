@@ -1,0 +1,12 @@
+name = Drupalbase WYSIWYG
+description = A wysiwyg feature with richtext format
+core = 7.x
+package = Drupalbase
+version = 7.x-1.0-beta2
+project = drupalbase_wysiwyg
+dependencies[] = features
+dependencies[] = filter
+dependencies[] = wysiwyg
+features[features_api][] = api:2
+features[filter][] = drupalbase_richtext
+features[wysiwyg][] = drupalbase_richtext
