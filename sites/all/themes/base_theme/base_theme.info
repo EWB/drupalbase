@@ -29,6 +29,6 @@ scripts[] = assets/javascripts/script.js
 ; Information added by Drupal.org packaging script on 2014-12-09
 version = "7.x-3.0-rc1"
 core = "7.x"
-project = "radix"
+; project = "radix"
 datestamp = "1418143643"
 
