@@ -8,7 +8,11 @@ base theme  = radix
 
 
 ; Regions
+regions[featured] = Featured
 regions[content] = Content
+regions[section1] = Section1
+regions[section2] = Section2
+regions[section3] = Section3
 
 ; Panels
 plugins[panels][layouts] = panels/layouts
