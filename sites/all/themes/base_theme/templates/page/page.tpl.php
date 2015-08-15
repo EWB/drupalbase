@@ -21,9 +21,16 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="<?php print $front_page; ?>" id="logo" class="navbar-brand">
-          <?php print $site_name; ?>
-        </a>
+        <?php if ($site_name || $logo): ?>
+          <a href="<?php print $front_page; ?>" class="navbar-brand" rel="home" title="<?php print t('Home'); ?>">
+            <?php if ($logo): ?>
+              <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" id="logo" />
+            <?php endif; ?>
+            <?php if ($site_name): ?>
+              <span class="site-name"><?php print $site_name; ?></span>
+            <?php endif; ?>
+          </a>
+        <?php endif; ?>
       </div> <!-- /.navbar-header -->
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -40,17 +47,22 @@
     </nav><!-- /.navbar -->
   </div> <!-- /.container -->
 </header>
-<div id="featured"><!--featured added by ewb-->
-<?php print render($page['featured']); ?>
-</div>  
-<div id="main-wrapper">
-  <div id="main" class="main">
-    <div class="container">
+<!-- ewb NEW location for breadcrumbs -->
       <?php if ($breadcrumb): ?>
         <div id="breadcrumb" class="visible-desktop">
           <?php print $breadcrumb; ?>
         </div>
       <?php endif; ?>
+<!-- ewb -->
+<div id="featured"><!--featured added by ewb-->
+<?php print render($page['featured']); ?>
+</div>  
+<!-- ewb done-->
+
+<div id="main-wrapper">
+  <div id="main" class="main">
+    <div class="container">
+<!-- ewb OLD location for breadcrumbs -->
       <?php if ($messages): ?>
         <div id="messages">
           <?php print $messages; ?>
@@ -79,6 +91,7 @@
     </div>
   </div> <!-- /#main -->
 </div> <!-- /#main-wrapper -->
+<!-- ewb -->
 <div id="section-wrapper1">
   <div id="section1" class="container"><!--section1 added by ewb-->
     <?php print render($page['section1']); ?>
@@ -94,6 +107,7 @@
     <?php print render($page['section3']); ?>
   </div>  
 </div>
+<!-- ewb done -->
 <footer id="footer" class="footer" role="footer">
   <div class="container">
     <?php if ($copyright): ?>
