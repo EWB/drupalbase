@@ -5,9 +5,7 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-# Various and sundry
+# Ignore various and sundry
+*/.DS_Store
 .DS_Store
-_.DS_Store
-
-# Ignore staging locations
-stage/*
+.DS_Store?
