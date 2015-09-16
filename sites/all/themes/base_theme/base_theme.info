@@ -9,6 +9,9 @@ base theme  = radix
 
 ; Regions
 regions[featured] = Featured
+regions[featured2] = Featured2
+regions[featured3] = Featured3
+regions[featured4] = Featured4
 regions[content] = Content
 regions[section1] = Section1
 regions[section2] = Section2
@@ -32,6 +35,6 @@ scripts[] = assets/javascripts/script.js
 ; Information added by Drupal.org packaging script on 2015-07-27
 version = "7.x-3.0-rc4"
 core = "7.x"
-project = "radix"
+;ewb project = "radix"
 datestamp = "1438012143"
 

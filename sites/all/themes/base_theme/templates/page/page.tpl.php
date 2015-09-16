@@ -57,6 +57,15 @@
 <div id="featured"><!--featured added by ewb-->
 <?php print render($page['featured']); ?>
 </div>  
+<div id="featured2"><!--featured added by ewb-->
+<?php print render($page['featured2']); ?>
+</div>  
+<div id="featured3"><!--featured added by ewb-->
+<?php print render($page['featured3']); ?>
+</div>  
+<div id="featured4"><!--featured added by ewb-->
+<?php print render($page['featured4']); ?>
+</div>  
 <!-- ewb done-->
 
 <div id="main-wrapper">
