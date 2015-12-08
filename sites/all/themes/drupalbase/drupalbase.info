@@ -1,0 +1,35 @@
+name        = DrupalBase
+description = A theme based on Radix.
+screenshot  = screenshot.png
+core        = 7.x
+
+; Base - Radix
+base theme  = radix
+
+
+; Regions
+regions[featured] = Featured
+regions[featured2] = Featured2
+regions[featured3] = Featured3
+regions[featured4] = Featured4
+regions[content] = Content
+regions[section1] = Section1
+regions[section2] = Section2
+regions[section3] = Section3
+
+; Panels
+plugins[panels][layouts] = panels/layouts
+plugins[panels][styles] = panels/styles
+
+; CSS - General
+stylesheets[all][]     = assets/css/drupalbase.style.css
+
+; Javascript
+scripts[] = assets/js/drupalbase.script.js
+
+; Information added by Drupal.org packaging script on 2015-12-07
+version = "7.x-3.1"
+core = "7.x"
+project = "radix"
+datestamp = "1449481143"
+
