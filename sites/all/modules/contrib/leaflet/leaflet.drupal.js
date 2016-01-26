@@ -30,11 +30,26 @@
           layers[key] = map_layer;
 
           // keep the reference of first layer
+          // Distinguish between "base layers" and "overlays", fallback to "base"
+          // in case "layer_type" has not been defined in hook_leaflet_map_info()
+          layer.layer_type = (typeof layer.layer_type === 'undefined') ? 'base' : layer.layer_type;
           // as written in the doc (http://leafletjs.com/examples/layers-control.html)
-          // "Also note that when using multiple base layers, only one of them should be added to the map at instantiation, but all of them should be present in the base layers object when creating the layers control."
-          if (i == 0) {
-            // flag the first layer as the default layer.
-            var default_key = key;
+          // Always add overlays layers when instantiate, and keep track of
+          // them for Control.Layers.
+          // Only add the very first "base layer" when instantiating the map
+          // if we have map controls enabled
+          switch (layer.layer_type) {
+            case 'overlay':
+              lMap.addLayer(map_layer);
+              overlays[key] = map_layer;
+              break;
+            default:
+              if (i === 0 || !this.map.settings.layerControl) {
+                lMap.addLayer(map_layer);
+                i++;
+              }
+              layers[key] = map_layer;
+              break;
           }
           i++;
         }
@@ -46,7 +61,6 @@
             switchEnable = true;
           }
         }
-        lMap.addLayer(layers[default_key]);
         if (switchEnable) {
           switchManager = new SwitchLayerManager(lMap, {baseLayers: layers});
         }
@@ -102,23 +116,15 @@
         }
 
         // center the map
-        if (this.map.center && (this.map.center.force || this.features.length == 0)) {
-          if (this.map.center.force) {
-            var zoom = this.map.settings.zoom;
-          }
-          else {
-            var zoom = this.map.settings.zoomDefault;
-          }
+        var zoom = this.map.settings.zoom ? this.map.settings.zoom : this.map.settings.zoomDefault;
+        if (this.map.center && (this.map.center.force || this.features.length === 0)) {
           lMap.setView(new L.LatLng(this.map.center.lat, this.map.center.lon), zoom);
         }
-        // if we have provided a zoom level, then use it after fitting bounds
-        else if (this.map.settings.zoom && this.features.length > 0) {
+        else if (this.features.length > 0) {
           Drupal.leaflet.fitbounds(lMap);
-          lMap.setZoom(this.map.settings.zoom);
-        }
-        // fit to bounds
-        else {
-          Drupal.leaflet.fitbounds(lMap);
+          if (this.map.settings.zoom) { // or: if (zoom) ?
+            lMap.setZoom(zoom);
+          }
         }
 
         // add attribution
@@ -150,8 +156,10 @@
           case 'polygon':
             lFeature = Drupal.leaflet.create_polygon(feature, lMap);
             break;
-          case 'multipolygon':
           case 'multipolyline':
+            feature.multipolyline = true;
+            // no break;
+          case 'multipolygon':
             lFeature = Drupal.leaflet.create_multipoly(feature, lMap);
             break;
           case 'json':
@@ -162,6 +170,12 @@
             break;
           case 'circle':
             lFeature = Drupal.leaflet.create_circle(feature, lMap);
+            break;
+          case 'circlemarker':
+            lFeature = Drupal.leaflet.create_circlemarker(feature, lMap);
+            break;
+          case 'rectangle':
+            lFeature = Drupal.leaflet.create_rectangle(feature, lMap);
             break;
         }
 
@@ -185,6 +199,10 @@
   };
 
   Drupal.leaflet = {
+
+    isOldVersion: function () {
+      return !(parseInt(L.version) >= 1); // version may start with '0' or '.'
+    },
 
     create_layer: function (layer, key) {
       // Use a Zoomswitch Layer extension to enable zoom-switch option.
@@ -218,12 +236,27 @@
       var latLng = new L.LatLng(circle.lat, circle.lon);
       latLng = latLng.wrap();
       lMap.bounds.push(latLng);
-      if (circle.options) {
-        return new L.Circle(latLng, circle.radius, circle.options);
+      if (circle.radius) {
+        // @deprecated
+        return L.circle(latLng, circle.radius, circle.options);
       }
-      else {
-        return new L.Circle(latLng, circle.radius);
-      }
+      return new L.Circle(latLng, circle.options);
+    },
+
+    create_circlemarker: function(circle, lMap) {
+      var latLng = new L.LatLng(circle.lat, circle.lon);
+      latLng = latLng.wrap();
+      lMap.bounds.push(latLng);
+      return new L.CircleMarker(latLng, circle.options);
+    },
+
+    create_rectangle: function(box, lMap) {
+      var bounds = box.bounds,
+        southWest = new L.LatLng(bounds.s, bounds.w),
+        northEast = new L.LatLng(bounds.n, bounds.e),
+        latLng = new L.LatLngBounds(southWest, northEast);
+      lMap.bounds.push(latLng);
+      return new L.Rectangle(latLng, box.settings);
     },
 
     create_point: function(marker, lMap) {
@@ -272,6 +305,9 @@
         }
         if (marker.icon.zIndexOffset) {
           icon.options.zIndexOffset = marker.icon.zIndexOffset;
+        }
+        if (marker.icon.className) {
+          icon.options.className = marker.icon.className;
         }
         var options = {icon:icon};
         if (marker.zIndexOffset) {
@@ -325,12 +361,10 @@
         }
         polygons.push(latlngs);
       }
-      if (multipoly.multipolyline) {
-        return new L.MultiPolyline(polygons);
+      if (this.isOldVersion()) {
+        return multipoly.multipolyline ? new L.MultiPolyline(polygons) : new L.MultiPolygon(polygons);
       }
-      else {
-        return new L.MultiPolygon(polygons);
-      }
+      return multipoly.multipolyline ? new L.Polyline(polygons): new L.Polygon(polygons);
     },
 
     create_json:function(json, lMap) {
@@ -345,7 +379,7 @@
 
           for (var layer_id in layer._layers) {
             for (var i in layer._layers[layer_id]._latlngs) {
-              Drupal.leaflet.bounds.push(layer._layers[layer_id]._latlngs[i]);
+              lMap.bounds.push(layer._layers[layer_id]._latlngs[i]);
             }
           }
 
